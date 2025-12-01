@@ -1,0 +1,27 @@
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header h2 {
+  margin: 0;
+}
+
+.table {
+  margin-top: 20px;
+}
+
+.table td button {
+  margin-right: 5px;
+}
+
+.status-select {
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+
+

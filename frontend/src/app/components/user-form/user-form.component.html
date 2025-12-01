@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h2>{{ userId ? 'Edit User' : 'Create User' }}</h2>
+    </div>
+
+    <div *ngIf="error" class="error">{{ error }}</div>
+    <div *ngIf="success" class="success">{{ success }}</div>
+
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+      <div class="form-group">
+        <label class="form-label" for="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          class="form-control"
+          formControlName="name"
+          [class.invalid]="userForm.get('name')?.invalid && userForm.get('name')?.touched"
+        >
+        <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched" class="error-message">
+          Name is required and must be at least 2 characters.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          formControlName="email"
+          [class.invalid]="userForm.get('email')?.invalid && userForm.get('email')?.touched"
+        >
+        <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" class="error-message">
+          Valid email is required.
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid || loading">
+          {{ userId ? 'Update' : 'Create' }}
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+      </div>
+    </form>
+
+    <div *ngIf="loading" class="loading">Loading...</div>
+  </div>
+</div>
+
+
+

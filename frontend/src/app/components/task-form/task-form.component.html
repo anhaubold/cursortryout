@@ -1,0 +1,77 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h2>{{ taskId ? 'Edit Task' : 'Create Task' }}</h2>
+    </div>
+
+    <div *ngIf="error" class="error">{{ error }}</div>
+    <div *ngIf="success" class="success">{{ success }}</div>
+
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+      <div class="form-group">
+        <label class="form-label" for="title">Title</label>
+        <input
+          type="text"
+          id="title"
+          class="form-control"
+          formControlName="title"
+          [class.invalid]="taskForm.get('title')?.invalid && taskForm.get('title')?.touched"
+        >
+        <div *ngIf="taskForm.get('title')?.invalid && taskForm.get('title')?.touched" class="error-message">
+          Title is required and must be at least 3 characters.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="description">Description</label>
+        <textarea
+          id="description"
+          class="form-control"
+          formControlName="description"
+          rows="4"
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="status">Status</label>
+        <select
+          id="status"
+          class="form-control"
+          formControlName="status"
+        >
+          <option [value]="TaskStatus.PENDING">Pending</option>
+          <option [value]="TaskStatus.IN_PROGRESS">In Progress</option>
+          <option [value]="TaskStatus.COMPLETED">Completed</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="userId">User</label>
+        <select
+          id="userId"
+          class="form-control"
+          formControlName="userId"
+          [class.invalid]="taskForm.get('userId')?.invalid && taskForm.get('userId')?.touched"
+        >
+          <option [value]="null">Select a user</option>
+          <option *ngFor="let user of users" [value]="user.id">{{ user.name }} ({{ user.email }})</option>
+        </select>
+        <div *ngIf="taskForm.get('userId')?.invalid && taskForm.get('userId')?.touched" class="error-message">
+          User selection is required.
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="taskForm.invalid || loading">
+          {{ taskId ? 'Update' : 'Create' }}
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+      </div>
+    </form>
+
+    <div *ngIf="loading" class="loading">Loading...</div>
+  </div>
+</div>
+
+
+
